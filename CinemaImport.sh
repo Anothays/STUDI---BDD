@@ -1,0 +1,1 @@
+/usr/local/mysql-8.0.34-macos13-x86_64/bin/mysql -u root -p Cinema < CinemaExport.sql
