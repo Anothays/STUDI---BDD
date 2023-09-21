@@ -1,7 +1,6 @@
 # Création de la base de données
-
-DROP DATABASE IF EXISTS `Cinema`;
-CREATE DATABASE `Cinema` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ DROP DATABASE IF EXISTS `Cinema`;
+CREATE DATABASE IF NOT EXISTS `Cinema` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `Cinema`;
 
 
@@ -35,8 +34,7 @@ CREATE TABLE `ProjectionEvents` (
 	`id_movie` INT NOT NULL,
 	`date` DATETIME NOT NULL,
 	`options` JSON,
-	`language` VARCHAR(30),
-	UNIQUE (`id_room`, `date`)
+	`language` VARCHAR(30)
 )engine=INNODB;
 
 CREATE TABLE `Tariffs` (
@@ -80,4 +78,6 @@ ALTER TABLE `Tickets` ADD FOREIGN KEY (`id_tariff`) REFERENCES `Tariffs`(`id`) O
 ALTER TABLE `Tickets` ADD FOREIGN KEY (`id_user`) REFERENCES `Users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `ProjectionEvents` ADD FOREIGN KEY (`id_room`) REFERENCES `Rooms`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `ProjectionEvents` ADD FOREIGN KEY (`id_movie`) REFERENCES `Movies`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `ProjectionEvents` ADD CONSTRAINT UNIQUE (`id_room`, `date`);
 ALTER TABLE `Rooms` ADD FOREIGN KEY (`id_movieTheater`) REFERENCES `MovieTheaters`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Rooms` ADD CONSTRAINT UNIQUE (`name`, `id_movieTheater`);
